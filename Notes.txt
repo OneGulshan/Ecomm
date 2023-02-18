@@ -1,0 +1,222 @@
+Create Ecomm Proj(Rest API)
+----------------------------
+
+Rest Api meaning is same as Web Api
+
+Project Structure
+- Sabse Phele Web Api me hamein Connected Services milta hai jisme 3 tabs hote hain OverView, Connected Services and fir Publish ka option dia jata hai.
+- Dependences :- me ham ddl file ya proj ref/package add kar sakte hain.
+- Properties me launchSettings file :- ye file hamare vs me kam aati hai after publish ye file hamare sath nahi hoti hai hamare kaam nahi aati hai.
+- appsettings.json :- ye ek json file hoti hai jhan par ham key value pairs me kuch bhi data rakh sakte hain like connection string.
+- Program.cs :- for Middelwares defining, DI/services using in Project
+
+
+Steps of Making Rest Api
+Create Models -> Create API Controller -> Create Static List -> Create All Curd Action Methods(performed actions on Static List Data) <- That's it
+
+HTTPVerbs :- HTTPVerbs is Post, Get, Put, Delete. by using this HTTPVerbs we create out Http Methods like HttpGet, HttpPost, HttpDelte, HttpPut. these HTTPVerbs is used by using Controllers.
+Curd :- Curd Full Form is Create,Update,Read,Delete. for ins data in list/db use Create, for getting data from this use Get, for updating use put, for deleting use delete. only Get can works on multiple or single data but all others works on only single.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Install Nuget Packages -> add constr in appsetting -> create context class -> add context in program.cs with constr -> Create CategoryController with database curd operations. <- chk all curd operations by swagger
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Status Codes(msgs) :- StatusCodes is Used for Exception Handling by Showing Status Code regarding to its error msgs. 1xx : Informational, 2xx : Successful, 3xx : Redirection, 4xx : Client Error(unusble url/req user se put karne pr), 5xx : Server Error <- ms imp :-  jab web server ko client req put karta hai to ye kuch status code ke zariye aapko output milta hai :- ye status code yaad nahi rakhe jaate hain
+kunki sabhi StatusCodes in StatusCodes nam ki static collection class me pae jate hain
+
+Exception Handling
+
+When we get data from API that's not available then this error msg showed -> 204 No Content
+When we Post/Put data on wrong/false id that's not available then we showed error/exception Object reference not set to an instance of an object then we use Exception Handling by checking rec based on id if not valid then show a NotFound error msg.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Now we talk about Synchronous/Asynchronous Programing
+
+What is Thread Pool how Thread Pool query from database and how Thread Pool is executed. Conjection/Concrancy(many req not handeled at same time then in case we showed error msgs this is called Concrancy in Synchronous programming bec req is executed one by one in this programming).
+
+Asynchronous Programing :-  agar hamin pata ho kisi query ko fetch karne me ya database se comunicate karne me bohot sara time lag jaega to us case me ham us query ko ham async prog me daal sakte hain. In this prog we req to use Async and Await keywords only for doing(kaam karne ke liye) on Async prog. this prog is most usable feature is ham isme unhandeled exceptions se bach sakte hain.
+
+Task/Task of T :- Task of T kuch value return karta hai or par Task koi bhi value ret nahi karta.
+
+In Async Programing with Task of T Make All Types of Sql queries to Async typeof as Posible by using await/Getawaiter typeof methods.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Now we talk about Content Negotiation, Migrations, DataSeeding
+
+Content Negotiation:- Jaise hi ham req karte hain Controller se ham chate hain hamara output result xml formate me aae. iske liye ham apne Postman me Headers se Accept value xml kar lenge by using key/value pair fields of Header of Postman. hamara web server data ko bydefault json formate me render karta hai / bhejta hai isliye Header section me xml formate render nahi hoga iske liye hi hamein Content Negotiation karna hota hai. iske liye ham program.cs me -> builder.Services.AddMvc().AddXmlSerializerFormatters(); use kar lete hain acc to client req.
+
+Migrations:- add-migration command for adding migration in project and for making database depends on migration use update-database command that's it.
+
+DataSeeding :- DataSeeding is for seeding our database using OnModelCreating method in Context.
+
+EnsureCreation :- by using EnsureCreated() method we can check our DB is created or not.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Now we learn how to create azure account for uploading our file in it.
+
+
+
+Notes
+------
+
+what is the meaning of commit in programming?
+In version control systems, a commit is an operation which sends the latest changes of the source code to the repository, making these changes part of the head revision of the repository. Unlike commits in data management, commits in version control systems are kept in the repository indefinitely.
+
+
+We need to create azure acc for uploading our img file on it -> after upload img save its path in db
+Steps -> https://portal.azure.com/#create/Microsoft.StorageAccount-ARM -> storage acc name(that's not exist)___ -> create -> go to resource -> create containers -> name container -> container access :- container(anonymous). -> click on container -> upload -> upload a img file here. -> click on img -> copy url of img -> past in browser for seeing. -> instal  azure.storage.blob(ye hamein container and blob client deta hai ye 2no classes hamari img upload karne me help karegi) <- we need to save img url/img name only not direct img in db this is an bad practice. <- is baar hamara form data nahi jaega flow data jaega
+
+
+Steps -> https://portal.azure.com/#home -> Search storage -> click on storage -> access keys -> connection string -> show -> copy
+
+Chg Post ret type void -> open POSTMAN -> use Post its body use form-data(for using form-data not body data) <- write our all prop of your model here by providing values to it.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Now we talk about validations and attribute routing
+[Required(ErrorMessage = "Title Can not be null or Empty !!")]
+
+Routing :- [HttpGet("[action]/{id}")]
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+D:\#Technology Keeda Rest API
+
+Json Formate data is exist in Array Formate bydefault simple.
+
+What is the meaning by NuGet packages in asp.net c#?
+Put simply, a NuGet package is a single ZIP file with the . nupkg extension that contains compiled code (DLLs), other files related to that code, and a descriptive manifest that includes information like the package's version number.
+
+What is ORM?
+EF core is an ORM. ORM meaning is ORM create db,tb and from class make tb. this is simply an mapper. its two part model first and code first. now we works on code first. this is a demonstration. ye zarurat isliye hai kunki ham isi ke ander kaam kar rahe hain or ye easily samjha ja sakta hai isiliye ham isme kaam kar rahe hain sql queries ko yaad karne ki koi zarurat nahi hai. ham log kuch lambda expression ya linq query ko use karke directly sql bana sakte hain.
+
+what is the meant by demonstration?
+n computer science, programming by demonstration (PbD) is an end-user development technique for teaching a computer or a robot new behaviors by demonstrating the task to transfer directly instead of programming it through machine commands. PbD is an technique.
+
+What is the use of SSL in Postman?
+Secure Sockets Layer (SSL) certificates are a way of authentication for some servers using the SSL encryption protocol. These certificates provide secure, encrypted communications between a client and a server.
+
+What is Swagger?
+Swagger is an Tool for Understanding API Consuming to Developer. we can also use its alternative PostMan or Swashbuckle.
+
+200 Suceess msg means 2x
+
+
+About Azure Learning Link :- https://azure.microsoft.com/en-us/get-started/welcome-to-azure/?experimentId=175739
+Tanu Gupta SBI CC Payed Azure Free Subscription on 17/08/2022
+gk231653@gmail.co Gulshan@111
+https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.http.statuscodes?view=aspnetcore-6.0
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+What is the difference between frombody, fromroute and fromform in webapi in asp.net core?
+[FromRoute] - Gets values from route data. [FromForm] - Gets values from posted form fields. [FromBody] - Gets values from the request body.
+
+What is the frombody in asp.net core?
+[FromBody] attribute
+The ASP.NET Core runtime delegates the responsibility of reading the body to an input formatter. Input formatters are explained later in this article. When [FromBody] is applied to a complex type parameter, any binding source attributes applied to its properties are ignored.
+
+What is the meaning by body of an HTTP request?
+HTTP Body Data is the data bytes transmitted in an HTTP transaction message immediately following the headers if there is any (in the case of HTTP/0.9 no headers are transmitted). Most HTTP requests are GET requests without bodies.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+What is ml.net in asp.net core?
+In ML.NET, we can give the data for both training and testing with a Text (CSV/TSV, Relational Database. Train. We need to select the right algorithm to train the model. Depending on our need, we need to pick the correct algorithm to train and predict the results.
+
+What is maui in asp.net core?
+NET Multi-platform App UI (. NET MAUI) is a cross-platform framework for creating native mobile and desktop apps with C# and XAML. Using . NET MAUI, you can develop apps that can run on Android, iOS, macOS, and Windows from a single shared code-base.
+
+
+What is the diff between in xamarin and maui in asp.net core?
+https://www.syncfusion.com/blogs/post/xamarin-versus-net-maui.aspx <- now by reading
+
+
+
+
+Previously we Learn only Demonstration(means overview how to make) of Rest api now we work on this demonstration and make an new project based on this Demonstration.
+
+Create 3 Models Book, BookCover and BookWritter and add by migration
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Now we learn about Controllers
+
+BooksController, WrittersController and CoversController
+BooksController:-
+Post([FromForm]Book book) - Admin
+TreadingBooks();
+NewBooks();
+SearchBooks(string filter);
+GetAllBooks();
+
+WrittersController:-
+Post([FromForm]Writer writer) - Admin
+GetWriters();
+WriterDetails(int writerId);
+
+CoversController
+Post([FromForm]Cover cover) - Admin
+GetCovers();
+CoverDetails(int coverId);
+
+
+Create a Helper Folder in Helper folder create an FileHelper class :- for reusing our image file code here simple
+In Books Controller add Post Method
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Deploy API on azure
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Deploy API on IIS(localhost in folder in system)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+What is API Versioning?
+API versioning means same api controller called on diff clients, versioning ke hissab se like on mobile 1.2 and on desktop 1.0 features showing.
+Install nuget package Microsoft.AspNetCore.Mvc.Versioning and add service using for versioning
+builder.Services.AddApiVersioning();
+add Home Controller, Querystring api versioning <- this is Querystring API Versioning by using this versioning we can send diff types of data on same url(using coding to versioning also its name).
+UrlPath-Api Versioning <- versioning info directly send in url no required here query string.
+MediaType Versioning <- add service of MediaTypeApiVersionReader();, set re-default api route, MediaType Versioning is checked by Postman using header
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Api Documentation <- For Cheaking API by developer correctly or Consuming Api Correctly also using Swagger UI.
+Install Swashbuckle.AspNetCore package <- If Swagger not Found use this proccess
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Create Repository Pattern In API <- Interfaces ki madad se ham repository pattern impliment karte hain.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Secret Key on Application Deployement on any Plateform
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sorting in API
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Here we know Cors //Cross Origion Resource Sharing
+ham apni API ko alag port ya client par jab use karte hain tab hamein Cors ki zarurat padti hai, jisme kuch policies hoti hai ki ye-2 url isko use kar sakta hai <- to ham iske liye apni api me settings karte hai
+Write Core Policy in Program.cs
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Now we Know About Identity, User Manager Class, Role Manager <- Authentication
+
+
+
